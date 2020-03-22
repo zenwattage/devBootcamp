@@ -7,8 +7,6 @@ const Course = require('../models/Course');
 // @route   GET /api/v1/courses
 // @route   GET /api/v1/bootcamps/:bootcampId/courses
 // @access  Public
-
-
 exports.getCourses = asyncHandler(async (req, res, next) => {
     let query;
 
@@ -28,5 +26,27 @@ exports.getCourses = asyncHandler(async (req, res, next) => {
         success: true,
         count: courses.length,
         data: courses
+    })
+});
+
+
+// @desc    Get single courses
+// @route   GET /api/v1/courses/:id
+// @access  Public
+exports.getCourse = asyncHandler(async (req, res, next) => {
+
+    const course = await (await Course.findById(req.params.id)).populated({
+        path: 'bootcamp',
+        select: 'name description'
+    });
+
+    if (!course) {
+        return next(new ErrorResponse(`No response with the id of ${req.params.id}`),
+            404);
+    }
+
+    res.status(200).json({
+        success: true,
+        data: course
     })
 });
