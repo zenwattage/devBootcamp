@@ -3,3 +3,7 @@
 
 #Start app for Development
  - npm run dev
+
+ - 
+ - Secure routing
+ - Server side pagination
