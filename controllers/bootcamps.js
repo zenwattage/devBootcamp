@@ -182,7 +182,7 @@ exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
 
-    const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
+    const bootcamp = await Bootcamp.findById(req.params.id);
 
     if (!bootcamp) {
         return next(new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404));
@@ -190,7 +190,18 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
 
     if (!req.files) {
         return next(
-            new ErrorResponse(`Please upload a file`, 400)
-        );
-    };
+            new ErrorResponse(`Please upload a file`, 400));
+    }
+
+
+    console.log(req.files);
+
+    // const file = req.files.file;
+
+    // console.log(file);
+    //Make sure image is a photo
+
+    // if (!file.mimetype.startsWith('image')) {
+    //     return next(new ErrorResponse('Please upload an image file', 400));
+    // }
 });
